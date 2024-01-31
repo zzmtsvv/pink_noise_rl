@@ -61,7 +61,7 @@ class ColoredActor(nn.Module):
         log_std = torch.clip(log_std, -20, 2)  # log_std = torch.clip(log_std, -5, 2) EDAC clipping
 
         eps = torch.from_numpy(self.noise.sample()).float().to(state.device)
-        action = mu + eps * log_std
+        action = mu + eps * log_std.exp()
 
         log_prob = self.log_prob(mu, log_std, action)
 
